@@ -1,0 +1,24 @@
+CREATE KEYSPACE quiz WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+
+USE quiz;
+
+drop table questions;
+
+CREATE TABLE questions (
+  id uuid PRIMARY KEY,
+  question text,
+  flaws set<text>,
+  answers map<text, boolean>,
+  author_name text,
+  author_email text
+ );
+
+truncate questions;
+
+INSERT INTO questions (id, question, answers, author_name, author_email)
+  VALUES (now(),'Wie hoch ist der Eiffeltrum?', {'33m':true, '23m':false, '133m': false, '13m':false}, 'Felix', 'schuchmann@gmail.com');
+
+UPDATE questions SET flaws = flaws + {'Eifelturm schreibt man mit einem F'}
+  WHERE id = now(); // Achtung, geht nicht. Man braucht die id in der Applikation!
+
+SELECT * FROM questions;
