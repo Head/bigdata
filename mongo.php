@@ -30,12 +30,71 @@ $questions->insert(array(
     )
 ));
 
+
+$questions->insert(array(
+    'slug' => 'question-2',
+    'question' => 'Frage2?',
+    'answers' => array(
+        '1'  => true,
+        '2'  => false,
+        '3' => false,
+        '4'  => false
+    ),
+    'date' => new MongoDate(),
+    'author' => array(
+        'name' => 'Felix',
+        'email' => 'schuchmann@gmail.com'
+    )
+));
+
+
+$questions->insert(array(
+    'slug' => 'question-3',
+    'question' => 'Frage3?',
+    'answers' => array(
+        'a'  => true,
+        'b'  => false,
+        'c' => false,
+        'd'  => false
+    ),
+    'date' => new MongoDate(),
+    'author' => array(
+        'name' => 'Felix',
+        'email' => 'schuchmann@gmail.com'
+    )
+));
+
+
+$questions->insert(array(
+    'slug' => 'question-3',
+    'question' => 'Frage4?',
+    'answers' => array(
+        'a'  => true,
+        'b'  => false,
+        'c' => false,
+        'd'  => false
+    ),
+    'date' => new MongoDate(),
+    'author' => array(
+        'name' => 'Felix',
+        'email' => 'schuchmann@gmail.com'
+    ),
+    'flaws' => array(
+        'Bla'
+    )
+));
+
 $questions->update(
     array( 'slug' => 'question-1'), // quasi eine where-Bedingung
-    array( '$set' => array( // ohne set $set würde es den ganzen Post ersetzen
-        'flaws' => array(
-            'Eifelturm schreibt man mit einem F'
-        )
+    array( '$addToSet' => array( // ohne set $set würde es den ganzen Post ersetzen
+        'flaws' => 'Eifelturm schreibt man mit einem F'
+    ))
+);
+
+$questions->update(
+    array( 'slug' => 'question-1'), // quasi eine where-Bedingung
+    array( '$addToSet' => array( // ohne set $set würde es den ganzen Post ersetzen
+        'flaws' => 'Die Frage ist doof'
     ))
 );
 
@@ -47,3 +106,34 @@ foreach( $doc['answers'] as $key => $value) {
     echo '<li>'.$key.'</li>';
 }
 echo '</ul>';
+
+echo '<hr>';
+echo 'Anmerkungen zur Frage:<br/>';
+echo '<ul>';
+foreach( $doc['flaws'] as $key => $value) {
+    echo '<li>'.$value.'</li>';
+}
+echo '</ul>';
+
+
+$doc = $questions->find( );
+var_dump($doc);
+
+/*
+ * 1. Ausgabe aller Fragen (d.h. der Fragestellungen) mit den zugeh¨origen Antworttexten.
+2. Ausgabe aller Fragen (d.h. der Fragestellungen) mit den zugeh¨origen Autorennamen.
+3. Ausgabe aller Fragen (d.h. der Fragestellungen), fur die bislang kein M ¨ ¨angel vermerkt
+wurde.
+Hinweis: Achten Sie darauf, dass dies (abh¨angig von Ihrer Modellierung) sowohl Fragen
+sein k¨onnen, bei denen fur die M ¨ ¨angelanzahl 0 eingetragen wurden als auch Fragen, fur ¨
+die dieses Attribut bislang gar nicht gespeichert wurde.
+4. Ausgabe aller Fragen (d.h. der Fragestellungen), fur die mehr als ein M ¨ ¨angel vermerkt
+wurde.
+5. Ausgabe aller Fragen (d.h. der Fragestellungen), die ein bestimmtes Stichwort (Ihrer
+Wahl — abh¨angig von den gew¨ahlten Beispieldaten) enthalten.
+6. Ausgabe der Anzahl aller Fragen.
+7. Uberpr ¨ ufung, ob es Fragen gibt, f ¨ ur die weniger als vier Antworten hinterlegt wurden. In ¨
+diesem Fall soll die Id dieser Fragen ausgegeben werden.
+8. Uberpr ¨ ufung, ob es Fragen gibt, f ¨ ur die mehr als eine Antwort als richtig markiert wurde. ¨
+In diesem Fall soll die Id dieser Fragen ausgegeben werden.
+ */

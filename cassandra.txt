@@ -16,7 +16,7 @@ CREATE TABLE questions (
 truncate questions;
 
 INSERT INTO questions (id, question, answers, author_name, author_email)
-  VALUES (now(),'Wie hoch ist der Eiffeltrum?', {'33m':true, '23m':false, '133m': false, '13m':false}, 'Felix', 'schuchmann@gmail.com');
+  VALUES (now(), 'Wie hoch ist der Eiffeltrum?', {'33m':true, '23m':false, '133m': false, '13m':false}, 'Felix', 'schuchmann@gmail.com');
 
 UPDATE questions SET flaws = flaws + {'Eifelturm schreibt man mit einem F'}
   WHERE id = now(); // Achtung, geht nicht. Man braucht die id in der Applikation!
